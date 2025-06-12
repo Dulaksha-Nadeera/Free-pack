@@ -3,6 +3,227 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>Dulaksha Software Hub</title>
+  <link rel="icon" href="android-chrome-512x512.png" type="image/png">
+</head>
+
+<style>
+  /* Background overlay with glassmorphism & fade-in */
+  #discordModal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    animation: fadeIn 0.6s ease forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Popup container with glass effect, rounded & shadow */
+  #discordModalContent {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 25px;
+    box-shadow:
+      0 8px 32px 0 rgba(31, 38, 135, 0.37),
+      0 0 15px rgba(88, 101, 242, 0.5);
+    width: 400px;
+    max-width: 95vw;
+    padding: 40px 30px;
+    text-align: center;
+    color: #222;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: zoomIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+
+  /* Server Icon styling */
+  #discordModalContent img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 25px;
+    box-shadow:
+      0 0 20px 5px rgba(0, 153, 255, 0.75);
+    transition: transform 0.3s ease;
+  }
+  #discordModalContent img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Heading */
+  #discordModalContent h1 {
+    font-weight: 800;
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #000000;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* Online members text */
+  #discordModalContent p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 30px;
+  }
+
+  /* Join button with gradient & animated hover */
+  #joinBtn {
+    display: inline-block;
+    background: linear-gradient(90deg, #5865F2, #4752C4);
+    background-size: 200% 200%;
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 16px 38px;
+    border-radius: 15px;
+    border: none;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(71, 82, 196, 0.6);
+    cursor: pointer;
+    transition: background-position 0.5s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+  #joinBtn:hover, #joinBtn:focus {
+    background-position: 100% 0;
+    box-shadow: 0 12px 30px rgb(0, 195, 255);
+    outline: none;
+  }
+
+  /* Countdown text */
+  #countdown {
+    margin-top: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    letter-spacing: 0.8px;
+    font-style: italic;
+  }
+
+  /* Countdown progress bar container */
+  #progressContainer {
+    width: 100%;
+    height: 6px;
+    background: rgb(131, 132, 143);
+    border-radius: 10px;
+    margin-top: 15px;
+    overflow: hidden;
+  }
+
+  /* Countdown progress bar fill */
+  #progressBar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #5865F2, #4752C4);
+    border-radius: 10px;
+    transform-origin: left;
+    animation: countdownAnim 10s linear forwards;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.75);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes countdownAnim {
+    from {transform: scaleX(1);}
+    to {transform: scaleX(0);}
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    #discordModalContent {
+      width: 90vw;
+      padding: 30px 20px;
+    }
+    #discordModalContent h1 {
+      font-size: 24px;
+    }
+    #discordModalContent p {
+      font-size: 16px;
+    }
+    #joinBtn {
+      font-size: 16px;
+      padding: 14px 30px;
+    }
+  }
+</style>
+<!-- Google Fonts: Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div id="discordModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div id="discordModalContent">
+    <img src="https://images-ext-1.discordapp.net/external/E1KetInE3ZBvU61xDG5iVwSL6UtUClYebuv5n6XQS-g/%3Fsize%3D4096%26ignore%3Dtrue%29./https/cdn.discordapp.com/avatars/273402925395476480/f7000cce36eafa606147796d11eecf10.png?format=webp&quality=lossless&width=240&height=240" alt="Discord Server Icon" />
+    <h1 id="modalTitle">BATTA GAMING</h1>
+    <p id="modalDesc">Online Members: 134</p>
+    <a id="joinBtn" href="https://discord.gg/CpJqkaQfjH" target="_blank" rel="noopener noreferrer" tabindex="0">Join Our Discord</a>
+    <div id="countdown">Join Discord Server In 10 seconds.</div>
+    <div id="progressContainer" aria-hidden="true">
+      <div id="progressBar"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+    const modal = document.getElementById('discordModal');
+    const countdownEl = document.getElementById('countdown');
+    let timeLeft = 10;
+
+    modal.style.display = 'flex';
+
+    // Disable closing on outside click or ESC key
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        // Do nothing
+      }
+    };
+    document.onkeydown = function(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+      }
+    };
+
+    const timer = setInterval(() => {
+      timeLeft--;
+      if(timeLeft > 0) {
+        countdownEl.textContent = `Join Discord Server In ${timeLeft} seconds.`;
+      } else {
+        clearInterval(timer);
+        modal.style.display = 'none';
+        document.onkeydown = null;
+        window.onclick = null;
+      }
+    }, 1000);
+  };
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Free Software & Tolls </title>
 <style>
   body {
@@ -190,6 +411,7 @@
 </section>
 
 <script>
+  
   const softwareList = [
     { id: "photoshop2020", title: "Adobe Photoshop 2020", desc: "Powerful photo editing and graphic design software.", image: "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg", normalTags:["photo","design"], advanceTags:["edit","creative"], downloadLink:"https://drive.google.com/file/d/15Kxh79bg90xQfV5tLRnpbxRCkzUHhIH-/view?usp=sharing", pcReq:"Operating System: Windows 10 64-bit\nProcessor: Intel® Core i3 or AMD Ryzen 3 (64-bit support required)\nRAM: 8 GB (Recommended 16 GB)\nGraphics Card: GPU with DirectX 12 support and 2 GB VRAM\nHard Disk Space: 4 GB available hard-disk space (SSD recommended) " },
     { id: "photoshop2023", title: "Adobe Photoshop 2023", desc: "Latest Photoshop with enhanced AI features.", image: "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg", normalTags:["photo","design"], advanceTags:["ai","creative"], downloadLink:"https://drive.google.com/file/d/10271riKPPknV9tZyFu7iVGpjWGvac1ui/view?usp=sharing", pcReq:"Operating System: Windows 10 64-bit\nProcessor: Intel® Core i5 or AMD Ryzen 5 (64-bit support required)\nRAM: 8 GB (Recommended 16 GB or more)\nGraphics Card: GPU with DirectX 12 support and 4 GB VRAM\nHard Disk Space: 4 GB available hard-disk space (SSD highly recommended)" },
@@ -212,7 +434,9 @@
     { id: "mediaencoder2022", title: " Adobe Media Encoder 2023", desc: "aster exports, more control, better automation.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Adobe_Media_Encoder_Icon.svg/1200px-Adobe_Media_Encoder_Icon.svg.png", normalTags:["web","design"], advanceTags:["prototyping","creative"], downloadLink:"https://drive.google.com/file/d/1-4Nd70WpO8NjB6yG2MUCwh8MS4XFaWVp/view?usp=sharing", pcReq:"Windows 10 (64-bit) version 20H2+\nIntel 6th Gen or AMD Ryzen 1000+\nMinimum 8 GB (16 GB recommended)\nSSD with 4+ GB free space\nOptional, GPU acceleration supported" },
     { id: "mediaencoder2023", title: " Adobe Media Encoder 2024", desc: "aster exports, more control, better automation.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Adobe_Media_Encoder_Icon.svg/1200px-Adobe_Media_Encoder_Icon.svg.png", normalTags:["web","design"], advanceTags:["cloud","collaboration"], downloadLink:"https://drive.google.com/file/d/1eJjBzE7yPX91jsKmM3sqYqDO77RxMRES/view?usp=sharing", pcReq:"Windows 10 (64-bit) 22H2 / Windows 11 64-\nIntel 7th Gen or AMD Ryzen 2000+\nMinimum 8 GB (16+ GB recommended)\nSSD required, 4+ GB free\nOptional, GPU with 2GB VRAM recommended\nASIO / WASAPI supported" },
 
-    { id: "googlechrome", title: " Google Chrome", desc: "aster exports, more control, better automation.", image: "https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png", normalTags:["web","design"], advanceTags:["cloud","collaboration"], downloadLink:"https://www.google.com/chrome/", pcReq:"Windows 7, Windows 8, Windows 8.1, Windows 10, or later (64-bit recommended)\nIntel Pentium 4 processor or later that supports SSE2\nMinimum 2 GB RAM\nAt least 350 MB of free disk space" },
+    { id: "googlechrome", title: " Google Chrome", desc: ".", image: "https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png", normalTags:["web","design"], advanceTags:["cloud","collaboration"], downloadLink:"https://www.google.com/chrome/", pcReq:"Windows 7, Windows 8, Windows 8.1, Windows 10, or later (64-bit recommended)\nIntel Pentium 4 processor or later that supports SSE2\nMinimum 2 GB RAM\nAt least 350 MB of free disk space" },
+    { id: "pcoptimization", title: " PC OPTIMIZATION 🔧| NO LAG | 2 GB RAM PC🛠️", desc: ".", image: "http://media.discordapp.net/attachments/1173176389801881600/1382741286368448804/ChatGPT_Image_Jun_12_2025_08_49_30_PM.png?ex=684c41ac&is=684af02c&hm=e2b406ef69e9c7b14dca672cd88b14db039a7a671e68336a71443551bb0d5c21&=&format=webp&quality=lossless&width=1229&height=819", normalTags:["web","design"], advanceTags:["cloud","collaboration"], downloadLink:"https://drive.google.com/drive/folders/1frt53DRqr_I0Xaucos_fLohCrdeF7nQN?usp=sharing", pcReq:"No Pc Requirements\n 🔴These regs work on my computer. You should take care of your computer." },
+
     
     // Add as many as needed (30+)
   ];
