@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Free Software & Tolls </title>
+<style>
+  body {
+    margin: 0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #eee;
+  }
+  header {
+    background: #0d1b2a;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.4);
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto;
+    max-width: 900px;
+  }
+  .filters input[type="search"],
+  .filters select {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    width: 250px;
+  }
+  .filters input[type="search"] {
+    flex-grow: 1;
+    max-width: 350px;
+  }
+  .cards-container {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+    gap: 25px;
+    padding: 0 20px;
+  }
+  .card {
+    background: #142850;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+  }
+  .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    background: #0d1b2a;
+    padding: 15px;
+  }
+  .card-body {
+    padding: 15px 18px 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .card-desc {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    flex-grow: 1;
+    color: #cbd5e1;
+  }
+  .pc-req {
+    font-size: 0.85rem;
+    white-space: pre-line;
+    background: #0d1b2a;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 12px;
+    color: #a0aec0;
+  }
+  .tags {
+    margin-bottom: 12px;
+  }
+  .tag {
+    display: inline-block;
+    background: #274c77;
+    color: #e0e7ff;
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-right: 8px;
+    margin-bottom: 6px;
+    user-select: none;
+  }
+  .btn-download {
+    background: #f97316;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 700;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+  }
+  .btn-download:hover {
+    background: #ea580c;
+  }
+  .download-count {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #fbbf24;
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .filters {
+      flex-direction: column;
+      max-width: 320px;
+    }
+    .filters input[type="search"], .filters select {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>Free Software & Tolls </header>
+
+<section class="filters">
+  <input type="search" id="searchInput" placeholder="Search software..." />
+  <select id="tagFilter">
+    <option value="all">All Normal Tags</option>
+    <option value="photo">Photo</option>
+    <option value="design">Design</option>
+    <option value="video">Video</option>
+    <option value="audio">Audio</option>
+    <option value="web">Web</option>
+    <option value="pdf">PDF</option>
+    <option value="graphics">Graphics</option>
+    <option value="animation">Animation</option>
+    <option value="3d">3D</option>
+    <option value="media">Media</option>
+    <option value="vector">Vector</option>
+  </select>
+  <select id="advTagFilter">
+    <option value="all">All Advanced Tags</option>
+    <option value="edit">Edit</option>
+    <option value="creative">Creative</option>
+    <option value="ai">AI</option>
+    <option value="performance">Performance</option>
+    <option value="motion">Motion</option>
+    <option value="graphics">Graphics</option>
+    <option value="3d">3D</option>
+    <option value="gpu">GPU</option>
+    <option value="render">Render</option>
+    <option value="timeline">Timeline</option>
+    <option value="cloud">Cloud</option>
+    <option value="recording">Recording</option>
+    <option value="noise">Noise</option>
+    <option value="development">Development</option>
+    <option value="create">Create</option>
+    <option value="pro">Pro</option>
+    <option value="webcam">Webcam</option>
+    <option value="voice">Voice</option>
+  </select>
+</section>
+
+<section class="cards-container" id="cardsContainer">
+  <!-- Software cards will be rendered here -->
+</section>
+
+<script>
+  const softwareList = [
+    { id: "photoshop2020", title: "Adobe Photoshop 2020", desc: "Powerful photo editing and graphic design software.", image: "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg", normalTags:["photo","design"], advanceTags:["edit","creative"], downloadLink:"https://drive.google.com/file/d/15Kxh79bg90xQfV5tLRnpbxRCkzUHhIH-/view?usp=sharing", pcReq:"Operating System: Windows 10 64-bit\nProcessor: Intel® Core i3 or AMD Ryzen 3 (64-bit support required)\nRAM: 8 GB (Recommended 16 GB)\nGraphics Card: GPU with DirectX 12 support and 2 GB VRAM\nHard Disk Space: 4 GB available hard-disk space (SSD recommended) " },
+    { id: "photoshop2023", title: "Adobe Photoshop 2023", desc: "Latest Photoshop with enhanced AI features.", image: "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg", normalTags:["photo","design"], advanceTags:["ai","creative"], downloadLink:"https://drive.google.com/file/d/10271riKPPknV9tZyFu7iVGpjWGvac1ui/view?usp=sharing", pcReq:"Operating System: Windows 10 64-bit\nProcessor: Intel® Core i5 or AMD Ryzen 5 (64-bit support required)\nRAM: 8 GB (Recommended 16 GB or more)\nGraphics Card: GPU with DirectX 12 support and 4 GB VRAM\nHard Disk Space: 4 GB available hard-disk space (SSD highly recommended)" },
+    { id: "photoshop2024", title: "Adobe Photoshop 2024", desc: "New features and performance improvements.", image: "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg", normalTags:["photo","design"], advanceTags:["performance","creative"], downloadLink:"https://drive.google.com/file/d/16I9Zj9LrI_eQvK-cKnwcejy3oiC9lEUu/view?usp=sharing", pcReq:"Operating System: Windows 10 64-bit \nProcessor: Intel® Core i7 or AMD Ryzen 7\nRAM: 16 GB minimum (32 GB recommended for heavy workflows)\nGraphics Card: GPU with DirectX 12 support and 4 GB or more VRAM\nHard Disk Space: 4 GB or more (SSD recommended, plus extra space for scratch disk)" },
+
+    { id: "illustrator2023", title: "Adobe Illustrator 2023", desc: "Updated vector tools and features.", image: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg", normalTags:["vector","design"], advanceTags:["update","creative"], downloadLink:"https://drive.google.com/file/d/1ecJS9cfUCskh4TBdTXb2aY9Zb-wDz-Ia/view?usp=sharing", pcReq:"Operating System: Windows 10 64-bit\nProcessor: Multicore Intel processor or AMD Ryzen processor with 64-bit support\nRAM: 8 GB RAM (16 GB or more recommended)\nHard Disk: 2 GB free disk space, SSD recommended\nGPU: DirectX 12 compatible GPU with 2 GB VRAM recommended for GPU performance features" },
+    { id: "illustrator2024", title: "Adobe Illustrator 2024", desc: "Improved pen tool and UI enhancements.", image: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg", normalTags:["vector","design"], advanceTags:["pen","ui"], downloadLink:"https://drive.google.com/file/d/1LXEX5zOkHiwGvyBkpW_FqO5sfz3D7Ll8/view?usp=sharing", pcReq:"Operating System: Windows 10 / 11 64-bit \nProcessor: Multicore Intel i5 or AMD Ryzen 5 (or better) processor with 64-bit support\nRAM: Minimum 16 GB RAM \nHard Disk: 4 GB or more free disk space \nGPU: DirectX 12 compatible GPU with 4 GB or more VRAM " },
+
+    { id: "aftereffects2020", title: "Adobe After Effects 2020", desc: "Motion graphics and visual effects.", image: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg", normalTags:["video","effects"], advanceTags:["motion","graphics"], downloadLink:"https://drive.google.com/file/d/1-W7fwKEZJv1xIxwCPFR_5qgmjNxzkheS/view?usp=sharing", pcReq:"OS: Windows 10 (64-bit)\nProcessor: Intel Core i5 (6th gen) or AMD Ryzen 5\nRAM: 16 GB (32 GB recommended)\nStorage: 15 GB available\nGPU: 2 GB VRAM (Recommended 4 GB+ for GPU acceleration)" },
+    { id: "aftereffects2023", title: "Adobe After Effects 2023", desc: "Improved 3D rendering and GPU acceleration.", image: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg", normalTags:["video","effects"], advanceTags:["3d","gpu"], downloadLink:"https://drive.google.com/file/d/1OKYMb9YwHhg3ECRhpvx69sLkpVceeDJP/view?usp=sharing", pcReq:"OS: Windows 10 (64-bit) version 1909 or later / Windows 11\nProcessor: Intel Core i7 / AMD Ryzen 7 or better\nRAM: 16 GB minimum (32 GB recommended)\nStorage: 15 GB available space (SSD REQUIRED)\nGPU: 4 GB VRAM minimum, DirectX 12 compatible\n📌 Multiframe Rendering සහ AI features (e.g., Roto Brush 2.0) මේ version වලට GPU power වැඩියි ඕනෙ." },
+    { id: "aftereffects2024", title: "Adobe After Effects 2024", desc: "Improved 3D rendering and GPU acceleration.", image: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg", normalTags:["video","effects"], advanceTags:["3d","gpu"], downloadLink:"https://drive.google.com/file/d/1_5EYQKMU6MLwnYZ1DcGcuyj2FTrjxG-T/view?usp=sharing", pcReq:"OS: Windows 10/11 64-bit \nProcessor: Intel Core i7 (12th Gen) / AMD Ryzen 9 (or better)\nRAM: ✅ 32 GB (64 GB recommended for 4K / VFX-heavy workflows)\nStorage: SSD required – 20 GB+ free space for install + scratch cache\nGPU: DirectX 12 supported GPU with 4 GB+ VRAM (NVIDIA RTX 3060 / AMD Radeon RX 6700 recommended)" },
+
+    { id: "premierepro2020", title: "Adobe Premiere Pro 2020", desc: "Professional video editing software.", image: "http://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg", normalTags:["video","editing"], advanceTags:["pro","edit"], downloadLink:"https://drive.google.com/file/d/1IQf9D4y2ReHuYScX9UTgKDQrPJz0yNVP/view?usp=sharing", pcReq:"OS: Windows 10 64-bit \nProcessor: Intel Core i5 6th Gen / AMD Ryzen 5\nRAM: 8 GB (16 GB recommended for HD, 32 GB for 4K)\nStorage: 8 GB for install (SSD highly recommended)\nGPU: 2 GB VRAM minimum (4 GB recommended), DirectX 12 support" },
+    { id: "premierepro2023", title: "Adobe Premiere Pro 2023", desc: "Faster rendering and new timeline features.", image: "http://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg", normalTags:["video","editing"], advanceTags:["render","timeline"], downloadLink:"https://drive.google.com/file/d/1IQf9D4y2ReHuYScX9UTgKDQrPJz0yNVP/view?usp=sharing", pcReq:"OS: Windows 10 64-bit\nProcessor: Intel Core i7 / AMD Ryzen 7\nRAM: 16 GB minimum (32 GB recommended for 4K or higher)\nStorage: SSD required; 8+ GB for installation\nGPU: 4 GB VRAM (NVIDIA GTX 1660 / RTX 2060 level or better)\n" },
+    { id: "premierepro2024", title: "Adobe Premiere Pro 2024", desc: "Faster rendering and new timeline features.", image: "http://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg", normalTags:["video","editing"], advanceTags:["render","timeline"], downloadLink:"https://drive.google.com/file/d/1gHIiqXWX3GM2c1UfRefFEKqLY-U58h0V/view?usp=sharing", pcReq:"OS: Windows 10/11 \nProcessor: Intel Core i7 12th Gen+ / AMD Ryzen 9\nRAM: ✅ 32 GB minimum (Recommended 64 GB for 4K+ workflows)\n Storage: SSD or NVMe required (Minimum 20 GB free space + media cache)\nGPU: DirectX 12 GPU with 6 GB+ VRAM (NVIDIA RTX 3060 / 4060 or AMD RX 6700+ recommended)\n  " },
+
+    { id: "audition2023", title: "Adobe Audition 2023", desc: "Advanced noise reduction and mixing.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Adobe_Audition_CC_icon_%282020%29.svg/2101px-Adobe_Audition_CC_icon_%282020%29.svg.png", normalTags:["audio","editing"], advanceTags:["noise","mixing"], downloadLink:"https://drive.google.com/file/d/1xKXE-RkmlcD8L5IHfTt8ElfAIqkzeLxj/view?usp=sharing", pcReq:"OS: Windows 10 \nProcessor: Intel® 6thGen or newer CPU – or AMD equivalent\nRAM: 8 GB (16 GB recommended)\nHard Disk: SSD with at least 4 GB free space\nGPU: Optional – GPU used for acceleration in some workflows\n" },
+    { id: "audition2023", title: "Adobe Audition 2024", desc: "Audio recording and editing software.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Adobe_Audition_CC_icon_%282020%29.svg/2101px-Adobe_Audition_CC_icon_%282020%29.svg.png", normalTags:["audio","editing"], advanceTags:["noise","mixing"], downloadLink:"https://drive.google.com/file/d/124UTzzQnS1EBYYDde35z77_OBIY58vi7/view?usp=sharing", pcReq:"OS: Windows 10 (22H2) / Windows 11 \nProcessor: Intel 7th Gen or AMD Ryzen 2000+ series\nStorage: SSD required, with 4+ GB free for installation\nGPU: Still optional, but GPU with 2GBVRAM+recommended for best UI performance \nSound: ASIO, WASAPI (Windows), or Core Audio (macOS)" },
+
+    { id: "mediaencoder2022", title: " Adobe Media Encoder 2023", desc: "aster exports, more control, better automation.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Adobe_Media_Encoder_Icon.svg/1200px-Adobe_Media_Encoder_Icon.svg.png", normalTags:["web","design"], advanceTags:["prototyping","creative"], downloadLink:"https://drive.google.com/file/d/1-4Nd70WpO8NjB6yG2MUCwh8MS4XFaWVp/view?usp=sharing", pcReq:"Windows 10 (64-bit) version 20H2+\nIntel 6th Gen or AMD Ryzen 1000+\nMinimum 8 GB (16 GB recommended)\nSSD with 4+ GB free space\nOptional, GPU acceleration supported" },
+    { id: "mediaencoder2023", title: " Adobe Media Encoder 2024", desc: "aster exports, more control, better automation.", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Adobe_Media_Encoder_Icon.svg/1200px-Adobe_Media_Encoder_Icon.svg.png", normalTags:["web","design"], advanceTags:["cloud","collaboration"], downloadLink:"https://drive.google.com/file/d/1eJjBzE7yPX91jsKmM3sqYqDO77RxMRES/view?usp=sharing", pcReq:"Windows 10 (64-bit) 22H2 / Windows 11 64-\nIntel 7th Gen or AMD Ryzen 2000+\nMinimum 8 GB (16+ GB recommended)\nSSD required, 4+ GB free\nOptional, GPU with 2GB VRAM recommended\nASIO / WASAPI supported" },
+
+    { id: "googlechrome", title: " Google Chrome", desc: "aster exports, more control, better automation.", image: "https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png", normalTags:["web","design"], advanceTags:["cloud","collaboration"], downloadLink:"https://www.google.com/chrome/", pcReq:"Windows 7, Windows 8, Windows 8.1, Windows 10, or later (64-bit recommended)\nIntel Pentium 4 processor or later that supports SSE2\nMinimum 2 GB RAM\nAt least 350 MB of free disk space" },
+    
+    // Add as many as needed (30+)
+  ];
+
+  // Download counts stored in localStorage
+  const downloadCountsKey = 'adobeDownloadCounts';
+  let downloadCounts = JSON.parse(localStorage.getItem(downloadCountsKey)) || {};
+
+  // Save download count for a given software ID
+  function incrementDownloadCount(id) {
+    downloadCounts[id] = (downloadCounts[id] || 0) + 1;
+    localStorage.setItem(downloadCountsKey, JSON.stringify(downloadCounts));
+    renderCards(); // refresh cards with updated counts
+  }
+
+  // Create tags HTML
+  function createTagsHTML(tags) {
+    return tags.map(t => `<span class="tag">${t}</span>`).join(' ');
+  }
+
+  // Render cards based on search and filters
+  function renderCards() {
+    const container = document.getElementById('cardsContainer');
+    const searchVal = document.getElementById('searchInput').value.toLowerCase();
+    const tagVal = document.getElementById('tagFilter').value;
+    const advTagVal = document.getElementById('advTagFilter').value;
+
+    let filtered = softwareList.filter(soft => {
+      // Search filter
+      const searchableText = (soft.title + " " + soft.desc).toLowerCase();
+      if (!searchableText.includes(searchVal)) return false;
+
+      // Normal tag filter
+      if (tagVal !== 'all' && !soft.normalTags.includes(tagVal)) return false;
+
+      // Advanced tag filter
+      if (advTagVal !== 'all' && !soft.advanceTags.includes(advTagVal)) return false;
+
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<p style="text-align:center; font-size:1.2rem; margin-top:40px; color:#fbbf24;">No software found matching your criteria.</p>`;
+      return;
+    }
+
+    const cardsHTML = filtered.map(soft => `
+      <div class="card" id="${soft.id}">
+        <img src="${soft.image}" alt="${soft.title}" loading="lazy" />
+        <div class="card-body">
+          <div class="card-title">${soft.title}</div>
+          <div class="card-desc">${soft.desc}</div>
+          <div class="pc-req"><strong>PC Requirements:</strong><br>${soft.pcReq.replace(/\n/g, "<br>")}</div>
+          <div class="tags">${createTagsHTML([...soft.normalTags, ...soft.advanceTags])}</div>
+          <a href="${soft.downloadLink}" target="_blank" rel="noopener" class="btn-download" onclick="incrementDownloadCount('${soft.id}')">Download</a>
+          <div class="download-count">Downloads: ${downloadCounts[soft.id] || 0}</div>
+        </div>
+      </div>
+    `).join('');
+    container.innerHTML = cardsHTML;
+  }
+
+  // Event listeners
+  document.getElementById('searchInput').addEventListener('input', renderCards);
+  document.getElementById('tagFilter').addEventListener('change', renderCards);
+  document.getElementById('advTagFilter').addEventListener('change', renderCards);
+
+  // Initial render
+  renderCards();
+</script>
+
+</body>
+</html>
